@@ -16,6 +16,8 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
-    "mongoose": "^4.13.2"
+    "mongoose": "^4.13.2",
+    "cors": "^2.8.3",
+    "ejs": "^2.5.6"
   }
 }

@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors');
 var bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 var { mongoose } = require('./db/mongoose');
@@ -6,6 +7,10 @@ var { Todo } = require('./models/todo');
 var { User } = require('./models/user');
 
 var app = express();
+app.use(cors());
+app.set('view engine', 'ejs')
+
+
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
@@ -70,6 +75,10 @@ app.put('/todos/:id', (req, res) => {
     });
 
 });
+
+app.get("/", (req, resp) => {
+    resp.render("index");
+  });
 
 app.listen(port, () => {
     console.log('Started on port ' + port + '');
