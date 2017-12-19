@@ -14,7 +14,8 @@ app.set('view engine', 'ejs')
 
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
-
+////////////////////////////////////////////////////
+//Todos endPoints
 app.post('/todos', (req, res) => {
     console.log(req.body);
     var todo = new Todo({
@@ -28,7 +29,6 @@ app.post('/todos', (req, res) => {
     });
 
 });
-
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
         res.status(200).send({ todos });
@@ -36,7 +36,6 @@ app.get('/todos', (req, res) => {
         res.status(400).send(err);
     })
 });
-
 app.get('/todos/:id', (req, res) => {
     let id = req.params.id;
     if (!ObjectID.isValid(id)) {
@@ -52,7 +51,6 @@ app.get('/todos/:id', (req, res) => {
         return res.status(400).send();
     }).catch((e) => res.status(400).send())
 });
-
 app.put('/todos/:id', (req, res) => {
     let id = req.params.id;
     if (!ObjectID.isValid(id)) {
@@ -80,7 +78,6 @@ app.put('/todos/:id', (req, res) => {
     });
 
 });
-
 app.patch('/todos/:id', (req, res) => {
     let id = req.params.id;
     if (!ObjectID.isValid(id)) {
@@ -115,12 +112,45 @@ app.delete('/todos/:id', (req, res) => {
         }
         res.status(200).send({ todo })
     }, (err) => res.status(400).send()).catch((e) => res.status(400).send())
-})
+});
+//end Todos endPoints
+////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////
+//Users endPoints
+app.post('/users', (req, res) => {
+    
+    var body = _.pick(req.body,['email','password']);
+    var user = new User(body);
+    user.save().then((user) => {
+        
+        return user.generateAuthToken();
+        //res.status(201).send(user);
+    }, (err) => {
+        res.status(400).send(err);
+    }).then((token)=>{
+        
+        res.header('x-auth',token).status(201).send(user);
+    },(err)=>{
+        res.status(400).send(err);
+    }).catch((e)=>{
+        res.status(400).send(e);
+    })
+
+});
+//end Users endPoints
+///////////////////////////////////////////////////
+
+
+
+
+
+
+
 
 app.get("/", (req, resp) => {
     resp.render("index");
 });
-
 app.listen(port, () => {
     console.log('Started on port ' + port + '');
 });
