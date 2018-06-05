@@ -7,28 +7,31 @@ const jwt = require('jsonwebtoken');
 // console.log(hash);
 
 
-var data ={
-    id:10
-}
-var token = jwt.sign(data,'123abc');
-console.log(token);
-
-var decode=jwt.verify(token,'123abc');
-console.log(decode);
-
-
+// var data = {
+//     id:4
+// };
 // var token = {
 //     data,
-//     hash:SHA256(JSON.stringify(data)+'somesecret').toString()
-// }
+//     hash:SHA256(JSON.stringify(data) + 'somesecret').toString()
+// };
 
 // token.data.id = 5;
-// token.hash=SHA256(JSON.stringify(token.data)).toString();
-// var res=SHA256(JSON.stringify(token.data)+'somesecret').toString();
-
-// if (res === token.hash) {
-//     console.log('data was not change');
+// token.hash = SHA256(JSON.stringify(token.data)).toString();
+// var resultHash= SHA256(JSON.stringify(token.data)+'somesecret').toString();
+// if (resultHash === token.hash) {
+//     console.log('Data was not changed');
 // }else{
-//     console.log('Data Error');
+//     console.log("Data was changed");    
 // }
+
+
+var data = {
+    id:15
+};
+
+var token = jwt.sign(data,"sec");
+console.log("token",token)
+
+var decode = jwt.verify(token,"sec");
+console.log("decode",decode);
 

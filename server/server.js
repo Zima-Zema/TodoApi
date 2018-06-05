@@ -31,6 +31,7 @@ app.post('/todos', (req, res) => {
 });
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
+        console.log(todos)
         res.status(200).send({ todos });
     }, (err) => {
         res.status(400).send(err);
@@ -122,15 +123,15 @@ app.post('/users', (req, res) => {
     
     var body = _.pick(req.body,['email','password']);
     var user = new User(body);
-    user.save().then((user) => {
-        
+
+    user.save().then(() => {    
         return user.generateAuthToken();
         //res.status(201).send(user);
     }, (err) => {
         res.status(400).send(err);
     }).then((token)=>{
-        
-        res.header('x-auth',token).status(201).send(user);
+       
+        res.status(201).header('x-auth',token).send(user);
     },(err)=>{
         res.status(400).send(err);
     }).catch((e)=>{
@@ -140,14 +141,6 @@ app.post('/users', (req, res) => {
 });
 //end Users endPoints
 ///////////////////////////////////////////////////
-
-
-
-
-
-
-
-
 app.get("/", (req, resp) => {
     resp.render("index");
 });
