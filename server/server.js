@@ -129,13 +129,16 @@ app.post('/users', (req, res) => {
         return user.generateAuthToken();
         //res.status(201).send(user);
     }, (err) => {
+        console.log("SaveError",err);
         res.status(400).send(err);
+
     }).then((token)=>{
-       
         res.status(201).header('x-auth',token).send(user);
     },(err)=>{
+        console.log("tokenError",err);
         res.status(400).send(err);
     }).catch((e)=>{
+        console.log("exception",e);
         res.status(400).send(e);
     })
 

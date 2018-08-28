@@ -1,6 +1,17 @@
 const {SHA256} = require('crypto-js');
 const jwt = require('jsonwebtoken');
+const bcrybt = require('bcryptjs');
 
+var password = "abc1234!";
+bcrybt.genSalt(10).then(salt=>{
+    bcrybt.hash(password,salt).then(hash=>{
+        console.log("hash>>",hash);
+        bcrybt.compare(password,hash).then(res=>{
+            console.log("res>>",res);
+            
+        })
+    })
+})
 
 // var message = 'I am In Love With You';
 // var hash = SHA256(message).toString();
@@ -25,13 +36,13 @@ const jwt = require('jsonwebtoken');
 // }
 
 
-var data = {
-    id:15
-};
+// var data = {
+//     id:15
+// };
 
-var token = jwt.sign(data,"sec");
-console.log("token",token)
+// var token = jwt.sign(data,"sec");
+// console.log("token",token)
 
-var decode = jwt.verify(token,"sec");
-console.log("decode",decode);
+// var decode = jwt.verify(token,"sec");
+// console.log("decode",decode);
 
